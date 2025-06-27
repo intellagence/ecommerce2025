@@ -1,0 +1,60 @@
+{% extends "base.html.twig" %}{# héritage du fichier base.html.twig (moule) #}
+
+{% block h1 %}Bienvenue {{ firstNameTwig }}{% endblock %}
+
+
+{% block body %}
+
+    <img 
+        src="{{ asset('images/jewerly.jpg') }}" 
+        alt=""
+        class="imgMain"
+    >
+
+    {# <pre>
+        {{ dump(fruits) }}
+    </pre> #}
+
+
+
+    {% for fruit in fruits %}
+        {# <pre>
+            {{ dump(fruit) }}
+        </pre> #}
+        <h2>{{ fruit }}</h2>
+    {% endfor %}
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
