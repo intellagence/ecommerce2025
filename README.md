@@ -4,7 +4,9 @@
 
 # Ouvrir le dossier sur VSC
   
-`composer install`
+```
+composer install
+```
 
 *Créer le fichier .env.local et configurer la variable DATABASE_URL*
   
