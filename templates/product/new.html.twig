@@ -11,10 +11,40 @@
 
         - la fonction twig form() qui prend comme argument la vue de l'objet $form tranmis par le render()
         ==> Elle affiche l'intégralité du formulaire de la balise <form> ouvrante à la balise </form> fermante
+        {{ form(formProduct) }}
+
+
+        - un ensemble de fonctions twig
+            - form_start(form) / form_end(form) (ouverture/fermeture)
+            - form_row(form.child) (élément/child)  qui est composé de :
+                form_label(form.child)
+                form_widget(form.child)
+                form_help(form.child)
+                form_errors(form.child)
+
+        syntaxe : parent.children
+
     #}
-    {{ form(formProduct) }}
+    
+    {{ form_start(formProduct) }}
    
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(formProduct.title) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(formProduct.price) }}
+                {# {{ form_help(formProduct.price) }}
+                {{ form_widget(formProduct.price) }}
+                {{ form_label(formProduct.price) }}
+                {{ form_errors(formProduct.price) }} #}
+            </div>
+        </div>
+        {{ form_row(formProduct.description) }}
+        
+        {{ form_rest(formProduct) }}
+        <input type="submit" value="Ajouter un produit" class="btn btn-dark w-100 mt-3">
 
-
+    {{ form_end(formProduct) }}
 
 {% endblock %}

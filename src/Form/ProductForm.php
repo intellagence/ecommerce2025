@@ -52,7 +52,7 @@ class ProductForm extends AbstractType
             ])
 
 
-            ->add('ajouter', SubmitType::class)
+            //->add('ajouter', SubmitType::class)
 
 
             /*
@@ -69,7 +69,7 @@ class ProductForm extends AbstractType
 
 
 
-                Un élément du formulaire est composé de :
+                Un élément/child du formulaire est composé de :
                     - label
                     - widget (input/select/textarea)
                     - help
