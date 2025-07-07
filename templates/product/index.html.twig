@@ -69,7 +69,11 @@
                         </a>
 
                         {# Supprimer #}
-                        <a href="" class="text-decoration-none">
+                        <a 
+                            href="{{ path('app_product_delete', {'id': product.id }) }}" 
+                            class="text-decoration-none"
+                            onclick="return confirm('êtes-vous sûr de vouloir supprimer ce produit ?')"
+                        >
                             {{ ux_icon('lucide:trash-2', {'class':'text-danger sizeSvg20'}) }}
                         </a>
                     </td>

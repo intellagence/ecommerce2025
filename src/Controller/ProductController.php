@@ -11,9 +11,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+// Préfixe devant toutes les routes du controller
+#[Route('/produit')]
 final class ProductController extends AbstractController
 {
-    #[Route('/produit/afficher', name:'app_product_index')]
+    #[Route('/afficher', name:'app_product_index')]
     public function index(ProductRepository $productRepository): Response
     {
         /*
@@ -44,7 +46,7 @@ final class ProductController extends AbstractController
        ]);
     }
 
-    #[Route('/produit/ajouter', name:'app_product_new')]
+    #[Route('/ajouter', name:'app_product_new')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         /*
@@ -91,7 +93,7 @@ final class ProductController extends AbstractController
             //dd($product);
 
             // notification
-
+            $this->addFlash('success','Le produit "' . $product->getTitle() . '" a bien été ajouté');
 
             // redirection
             /*
@@ -108,7 +110,7 @@ final class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/produit/fiche/{id}', name:'app_product_show')]
+    #[Route('/fiche/{id}', name:'app_product_show')]
     public function show(Product $product): Response
     {
         /*
@@ -128,12 +130,13 @@ final class ProductController extends AbstractController
             rappel pour la clé primaire : {id}
         */
         //dump($product);
+
         return $this->render('product/show.html.twig', [
             'product' => $product
         ]);
     }
 
-    #[Route('/produit/modifier/{id}', name:'app_product_edit')]
+    #[Route('/modifier/{id}', name:'app_product_edit')]
     public function edit(Product $product, Request $request, EntityManagerInterface $entityManager): Response
     {
         /*
@@ -147,6 +150,7 @@ final class ProductController extends AbstractController
             
             $entityManager->flush();
 
+            $this->addFlash('success','Le produit "' . $product->getTitle() . '" a bien été modifié');
 
             return $this->redirectToRoute('app_product_index');
             //return $this->redirectToRoute('app_product_show', ['id' => $product->getId()]);
@@ -157,6 +161,16 @@ final class ProductController extends AbstractController
             'formProduct' => $form
         ]);
     }
+
+    #[Route('/supprimer/{id}', name:'app_product_delete')]
+    public function delete(Product $product, EntityManagerInterface $entityManager): Response
+    {
+        $entityManager->remove($product);
+        $entityManager->flush();
+        $this->addFlash('success', 'Le produit "' . $product->getTitle() . '" a bien été supprimé');
+        return $this->redirectToRoute('app_product_index');
+    }
+
 
 
 

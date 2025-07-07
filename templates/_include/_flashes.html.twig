@@ -1,0 +1,25 @@
+{#
+    En twig, il existe une variable d'environnement (array) qui va contenir des données de la session
+    Par exemple : les données de l'utilisateur connecté
+    mais aussi les flashes
+
+    Cette variable s'appelle : app
+#}
+
+{% for notification in app.flashes('success') %}
+    <div class="text-center alert alert-success w-50 mx-auto my-4 p-4">
+        {{ notification }}
+    </div>
+{% endfor %}
+
+{% for notification in app.flashes('error') %}
+    <div class="text-center alert alert-danger w-50 mx-auto my-4 p-4">
+        {{ notification }}
+    </div>
+{% endfor %}
+
+{% for notification in app.flashes('warning') %}
+    <div class="text-center alert alert-warning w-50 mx-auto my-4 p-4">
+        {{ notification }}
+    </div>
+{% endfor %}
