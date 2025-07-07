@@ -108,8 +108,60 @@ final class ProductController extends AbstractController
         ]);
     }
 
+    #[Route('/produit/fiche/{id}', name:'app_product_show')]
+    public function show(Product $product): Response
+    {
+        /*
+            Il existe 2 types de route : avec et sans paramètres
+
+            Les paramètres permettent de véhiculer des données d'une route à une autre
+
+            On distingue 2 types de paramètres :
+                - ceux qui permettent de récupérer un objet de la base de données
+                - les autres, juste des valeurs (une variable)
+
+            On peut définir le nom du paramètre comme on le souhaite sauf si ce dernier est à injecter dans un objet issu d'une entity, il faut que le paramètre porte le même nom que la propriété de l'objet 
+            l'ORM de Symfony (Doctrine) s'occupe de récupérer tout l'objet en BDD (pas besoin de faire une requête)
+
+            Depuis Symfony 7, si le paramètre n'est pas la clé primaire (id) la syntaxe est :
+            {property:entity} 
+            rappel pour la clé primaire : {id}
+        */
+        //dump($product);
+        return $this->render('product/show.html.twig', [
+            'product' => $product
+        ]);
+    }
+
+    #[Route('/produit/modifier/{id}', name:'app_product_edit')]
+    public function edit(Product $product, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        /*
+            Les routes "ajouter" et "modifier" sont identiques sauf que dans un cas on génère un nouvel objet $product et dans l'autre on récupère un objet $product de la base de données
+        */
+        $form = $this->createForm(ProductForm::class, $product);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $entityManager->flush();
 
 
+            return $this->redirectToRoute('app_product_index');
+            //return $this->redirectToRoute('app_product_show', ['id' => $product->getId()]);
+        }
+
+        return $this->render('product/edit.html.twig', [
+            'product' => $product,
+            'formProduct' => $form
+        ]);
+    }
+
+
+
+
+    
 
     
 }
