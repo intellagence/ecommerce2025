@@ -10,3 +10,9 @@
     width: 20px;
     height: 20px;
 }
+
+.noDesignbtn{
+    border:none;
+    padding: 0;
+    background-color: transparent;
+}
