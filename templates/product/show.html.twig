@@ -29,6 +29,18 @@
                 {% endif %}
             </td>
         </tr>
+        <tr>
+            <th class="w-25">Catégorie</th>
+            <td class="w-75">
+                {% if product.category %}
+                    <a href="{{ path('app_category_show', {'id': product.category.id} ) }}">
+                        {{ product.category.title }}
+                    </a>
+                {% else %}
+                    {{ ux_icon('iconoir:xmark', {'class':'text-danger sizeSvg20'}) }}
+                {% endif %}
+            </td>
+        </tr>
     </table>
 
 

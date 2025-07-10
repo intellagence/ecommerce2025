@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\CategoryRepository;
+use App\Repository\MaterialRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CategoryRepository::class)]
-class Category
+#[ORM\Entity(repositoryClass: MaterialRepository::class)]
+class Material
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -21,14 +21,13 @@ class Category
     /**
      * @var Collection<int, Product>
      */
-    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'category')]
+    #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'materials')]
     private Collection $products;
 
     public function __construct()
     {
         $this->products = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
@@ -59,7 +58,7 @@ class Category
     {
         if (!$this->products->contains($product)) {
             $this->products->add($product);
-            $product->setCategory($this);
+            $product->addMaterial($this);
         }
 
         return $this;
@@ -68,14 +67,9 @@ class Category
     public function removeProduct(Product $product): static
     {
         if ($this->products->removeElement($product)) {
-            // set the owning side to null (unless already changed)
-            if ($product->getCategory() === $this) {
-                $product->setCategory(null);
-            }
+            $product->removeMaterial($this);
         }
 
         return $this;
     }
-
-
 }

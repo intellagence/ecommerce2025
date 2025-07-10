@@ -12,12 +12,15 @@
         <pre>
             {{ dump(products) }}
         </pre>
-
+    
         products est un tableau d'objets
         lorsqu'on le boucle, on extrait à chaque tour un objet
 
         Rappel, on n'affiche pas un objet directement mais les propriétés qui se trouvent à l'intérieur
         syntaxe : objet.property
+
+        si la propriété est un objet alors :
+        objet.objet.property
     #}
     <table class="table table-striped table-hover table-bordered text-center mt-3">
 
@@ -27,6 +30,7 @@
                 <th>Titre</th>
                 <th>Prix (€)</th>
                 <th>Description</th>
+                <th>Catégorie</th>
                 <th></th>
             </tr>
         </thead>
@@ -47,6 +51,16 @@
                             {% endif %}
                         {% else %}
                             {# <span class="fst-italic text-danger">N.R</span> #}
+                            {{ ux_icon('iconoir:xmark', {'class':'text-danger sizeSvg20'}) }}
+                        {% endif %}
+                    </td>
+                    
+                    <td>
+                        {% if product.category %}
+                            <a href="{{ path('app_category_show', {'id': product.category.id} ) }}">
+                                {{ product.category.title }}
+                            </a>
+                        {% else %}
                             {{ ux_icon('iconoir:xmark', {'class':'text-danger sizeSvg20'}) }}
                         {% endif %}
                     </td>

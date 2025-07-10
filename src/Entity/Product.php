@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,6 +25,19 @@ class Product
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?Category $category = null;
+
+    /**
+     * @var Collection<int, Material>
+     */
+    #[ORM\ManyToMany(targetEntity: Material::class, inversedBy: 'products')]
+    private Collection $materials;
+
+    public function __construct()
+    {
+        $this->materials = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -62,6 +77,42 @@ class Product
     public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Material>
+     */
+    public function getMaterials(): Collection
+    {
+        return $this->materials;
+    }
+
+    public function addMaterial(Material $material): static
+    {
+        if (!$this->materials->contains($material)) {
+            $this->materials->add($material);
+        }
+
+        return $this;
+    }
+
+    public function removeMaterial(Material $material): static
+    {
+        $this->materials->removeElement($material);
 
         return $this;
     }

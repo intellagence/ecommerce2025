@@ -78,7 +78,7 @@ final class ProductController extends AbstractController
             Si le formulaire a été soumis et validé (constraints)
         */
         if ($form->isSubmitted() && $form->isValid()) {
-            dump($product);
+            //dd($product);
 
             // EntityManagerInterface est la class qui permet d'exécuter les 3 requètes :
             // INSERT INTO

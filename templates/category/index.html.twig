@@ -12,6 +12,7 @@
             <tr>
                 <th>Id</th>
                 <th>Titre</th>
+                <th>Quantité</th>
                 <th></th>
             </tr>
         </thead>
@@ -19,7 +20,8 @@
         {% for category in categories %}
             <tr>
                 <td class="w-25">{{ category.id }}</td>
-                <td class="w-50">{{ category.title }}</td>
+                <td class="w-25">{{ category.title }}</td>
+                <td class="w-25">{{ category.products|length }}</td>
                 <td class="w-25">
 
                     <a 
